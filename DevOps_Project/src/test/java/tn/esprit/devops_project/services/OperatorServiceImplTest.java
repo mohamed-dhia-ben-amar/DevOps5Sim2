@@ -100,6 +100,7 @@ public class OperatorServiceImplTest {
         assertTrue(executionTime > 1000); // par exemple, en millisecondes
     }*/
 
+    
 
 
 
