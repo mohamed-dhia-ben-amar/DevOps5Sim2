@@ -1,23 +1,35 @@
 package tn.esprit.devops_project.services;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.devops_project.entities.Operator;
 import tn.esprit.devops_project.repositories.OperatorRepository;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class OperatorServiceImplTest {
 
-    @Autowired
-    private OperatorRepository operatorRepository;
 
+    // niveau de test :  test d'integration (utilisation de @SpringBootTest)
     @Autowired
     private OperatorServiceImpl operatorService;
 
+
+    //nous utilisons le framework Mockito pour simuler le comportement de OperatorRepository
+    @Autowired
+    private OperatorRepository operatorRepository;
+
     @Test
+    @Order(1)
     public void testAddOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
@@ -39,6 +51,7 @@ public class OperatorServiceImplTest {
 
 
     @Test
+    @Order(2)
     public void testRetrieveOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
@@ -61,5 +74,88 @@ public class OperatorServiceImplTest {
         assertEquals("Smith", retrievedOperator.getLname());
         assertEquals("securepassword", retrievedOperator.getPassword());
     }
+
+
+
+
+
+//Test non fonctionnel (Perfermance)
+   /* @Test
+    @Order(3)
+    public void testPerformanceAddOperators() {
+        long startTime = System.currentTimeMillis();
+
+        for (int i = 0; i < 1000; i++) {
+            Operator operator = new Operator();
+            operator.setFname("John" + i);
+            operator.setLname("Doe" + i);
+            operator.setPassword("password" + i);
+            operatorService.addOperator(operator);
+        }
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+
+        // Vérifiez que le temps d'exécution est inférieur à un certain seuil
+        assertTrue(executionTime > 1000); // par exemple, en millisecondes
+    }*/
+
+
+
+
+
+// Test fonctionnel (Validation)
+    // Méthode pour valider une adresse e-mail
+    public boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier le format d'une adresse e-mail
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        return email.matches(emailRegex);
+    }
+
+    @Test
+    @Order(4)
+    public void testValidEmail() {
+        String validEmail = "johndoe@example.com";
+        assertTrue(isValidEmail(validEmail));
+    }
+
+    @Test
+    @Order(5)
+    public void testInvalidEmail() {
+        String invalidEmail = "invalid_email";
+        assertFalse(isValidEmail(invalidEmail));
+    }
+
+
+    @Test
+    @Order(6)
+    public void testUpdateOperator() {
+        // Créer un nouvel opérateur
+        Operator operator = new Operator();
+        operator.setFname("ahmed");
+        operator.setLname("bouslimi");
+        operator.setPassword("1234");
+
+        // Ajouter l'opérateur à la base de données
+        Operator savedOperator = operatorService.addOperator(operator);
+
+        // Mettre à jour les informations de l'opérateur
+        savedOperator.setFname("Ali");
+        savedOperator.setLname("Abidi");
+        savedOperator.setPassword("4321");
+        Operator updatedOperator = operatorService.updateOperator(savedOperator);
+
+        // Récupérer l'opérateur mis à jour par son ID
+        Long operatorId = updatedOperator.getIdOperateur();
+        Operator retrievedOperator = operatorService.retrieveOperator(operatorId);
+
+        // Vérifier que les informations de l'opérateur ont été correctement mises à jour
+        assertEquals("Ali", retrievedOperator.getFname());
+        assertEquals("Abidi", retrievedOperator.getLname());
+        assertEquals("4321", retrievedOperator.getPassword());
+    }
+
+
+
 
 }
