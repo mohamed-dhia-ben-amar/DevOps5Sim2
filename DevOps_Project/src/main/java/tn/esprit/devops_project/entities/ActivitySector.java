@@ -1,10 +1,15 @@
 package tn.esprit.devops_project.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.Set;
 

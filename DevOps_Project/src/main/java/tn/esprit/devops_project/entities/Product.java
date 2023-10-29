@@ -14,8 +14,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private static final long serialVersionUID = 1L;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idProduct;
     String title;
     float price;
