@@ -5,8 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.13</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.1.5</version>
     </parent>
     <groupId>tn.esprit</groupId>
     <artifactId>DevOps_Project</artifactId>
@@ -78,7 +77,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.5</version> <!-- Remplacez par la version de Spring Boot que vous utilisez -->
             </plugin>
         </plugins>
     </build>
