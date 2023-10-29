@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
- class OperatorServiceImplTest {
+public class OperatorServiceImplTest {
 
 
     // niveau de test :  test d'integration (utilisation de @SpringBootTest)
@@ -29,8 +29,7 @@ import static org.mockito.Mockito.when;
     private OperatorRepository operatorRepository;
 
     @Test
-    @Order(1)
-     void testAddOperator() {
+    public void testAddOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("dhia");
@@ -51,8 +50,7 @@ import static org.mockito.Mockito.when;
 
 
     @Test
-    @Order(2)
-     void testRetrieveOperator() {
+    public void testRetrieveOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("Alice");
@@ -79,26 +77,6 @@ import static org.mockito.Mockito.when;
 
 
 
-//Test non fonctionnel (Perfermance)
-   /* @Test
-    @Order(3)
-    public void testPerformanceAddOperators() {
-        long startTime = System.currentTimeMillis();
-
-        for (int i = 0; i < 1000; i++) {
-            Operator operator = new Operator();
-            operator.setFname("John" + i);
-            operator.setLname("Doe" + i);
-            operator.setPassword("password" + i);
-            operatorService.addOperator(operator);
-        }
-
-        long endTime = System.currentTimeMillis();
-        long executionTime = endTime - startTime;
-
-        // Vérifiez que le temps d'exécution est inférieur à un certain seuil
-        assertTrue(executionTime > 1000); // par exemple, en millisecondes
-    }*/
 
 
 
@@ -114,23 +92,20 @@ import static org.mockito.Mockito.when;
     }
 
     @Test
-    @Order(4)
-     void testValidEmail() {
+    public void testValidEmail() {
         String validEmail = "johndoe@example.com";
         assertTrue(isValidEmail(validEmail));
     }
 
     @Test
-    @Order(5)
-     void testInvalidEmail() {
+    public void testInvalidEmail() {
         String invalidEmail = "invalid_email";
         assertFalse(isValidEmail(invalidEmail));
     }
 
 
     @Test
-    @Order(6)
-     void testUpdateOperator() {
+    public void testUpdateOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("ahmed");
