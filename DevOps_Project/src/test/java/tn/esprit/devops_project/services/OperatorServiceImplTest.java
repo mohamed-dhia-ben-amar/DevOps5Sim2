@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class OperatorServiceImplTest {
+ class OperatorServiceImplTest {
 
 
     // niveau de test :  test d'integration (utilisation de @SpringBootTest)
@@ -30,7 +30,7 @@ public class OperatorServiceImplTest {
 
     @Test
     @Order(1)
-    public void testAddOperator() {
+     void testAddOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("dhia");
@@ -52,7 +52,7 @@ public class OperatorServiceImplTest {
 
     @Test
     @Order(2)
-    public void testRetrieveOperator() {
+     void testRetrieveOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("Alice");
@@ -100,7 +100,7 @@ public class OperatorServiceImplTest {
         assertTrue(executionTime > 1000); // par exemple, en millisecondes
     }*/
 
-    
+
 
 
 
@@ -115,14 +115,14 @@ public class OperatorServiceImplTest {
 
     @Test
     @Order(4)
-    public void testValidEmail() {
+     void testValidEmail() {
         String validEmail = "johndoe@example.com";
         assertTrue(isValidEmail(validEmail));
     }
 
     @Test
     @Order(5)
-    public void testInvalidEmail() {
+     void testInvalidEmail() {
         String invalidEmail = "invalid_email";
         assertFalse(isValidEmail(invalidEmail));
     }
@@ -130,7 +130,7 @@ public class OperatorServiceImplTest {
 
     @Test
     @Order(6)
-    public void testUpdateOperator() {
+     void testUpdateOperator() {
         // Créer un nouvel opérateur
         Operator operator = new Operator();
         operator.setFname("ahmed");
