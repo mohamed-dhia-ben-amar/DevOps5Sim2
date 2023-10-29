@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 import javax.persistence.*;
 
@@ -23,9 +23,8 @@ import javax.persistence.*;
 public class Operator implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-
-
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long idOperateur;
 	String fname;
 	String lname;
