@@ -5,7 +5,7 @@ FROM openjdk:11
 EXPOSE 8082
 
 # Copie du fichier JAR de votre application dans le conteneur
-ADD target/DevOps_Project-2.1.jar timesheet-devops-1.0.jar
+ADD target/DevOps_Project-2.1.jar DevOps_Project-2.1.jar
 
 # Commande d'exécution de l'application Spring Boot
 ENTRYPOINT ["java", "-jar", "/DevOps_Project-2.1.jar"]
