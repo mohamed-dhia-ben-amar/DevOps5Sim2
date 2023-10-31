@@ -4,8 +4,9 @@ FROM openjdk:11
 # Exposition du port de l'application Spring Boot (remplacez le port par celui que vous avez configuré)
 EXPOSE 8082
 
-# Copie du fichier JAR de votre application dans le conteneur
-ADD target/DevOps_Project-2.1.jar DevOps_Project-2.1.jar
+# Utilisation d'une commande RUN pour télécharger l'artefact avec curl
+RUN curl -o DevOps_Project-2.1.jar -L http://192.168.24.198:8081/repository/maven-releases/tn/esprit/DevOps_Project/2.1/DevOps_Project-2.1.jar
+
 
 # Commande d'exécution de l'application Spring Boot
 ENTRYPOINT ["java", "-jar", "/DevOps_Project-2.1.jar"]
