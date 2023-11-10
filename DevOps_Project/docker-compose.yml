@@ -1,33 +1,32 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  mysqldb:
-    image: mysql:5.7
-    restart: unless-stopped
+  # MySQL database service
+  mysql:
+    image: mysql:latest
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops
     ports:
       - "3306:3306"
     volumes:
-      - db:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
 
-  gestion-station-ski:
-    depends_on:
-      - mysqldb
-    image: 14326410/stockmgt-devops:1.0.0
-    restart: on-failure
-    environment:
-      SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db_stock?createDatabaseIfNotExist=true"
-        "spring.datasource.username": "root",
-        "spring.datasource.password":
-        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"
-        "spring.jpa.hibernate.ddl-auto": "update"
-      }'
+  # Spring Boot application service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8089:8089"
-    stdin_open: true
-    tty: true
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/devops?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 
+
 
 
 volumes:
-  db:
+  mysql-data:
