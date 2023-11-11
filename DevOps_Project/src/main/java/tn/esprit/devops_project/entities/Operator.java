@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.Id;
 
 import javax.persistence.*;
-
+@Builder
 @Entity
 @Getter
 @Setter
