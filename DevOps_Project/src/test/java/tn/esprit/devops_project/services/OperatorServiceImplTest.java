@@ -49,6 +49,7 @@ class OperatorServiceImplTest {
         List<Operator> operateurslist = operateurService.retrieveAllOperators();
         assertFalse(operateurslist.isEmpty());
         verify(operateurRepository).findAll();
+
     }
 
     @Test
@@ -66,15 +67,6 @@ class OperatorServiceImplTest {
 
     }
 
-    @Test
-    void deleteOperateur() {
-    }
 
-    @Test
-    void updateOperateur() {
-    }
-
-    @Test
-    void retrieveOperateur() {
-    }
 }
+
