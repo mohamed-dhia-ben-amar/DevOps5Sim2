@@ -1,72 +1,64 @@
 package tn.esprit.devops_project.services;
-import tn.esprit.devops_project.entities.Operator;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import tn.esprit.devops_project.entities.Operator;
 import tn.esprit.devops_project.repositories.OperatorRepository;
-import tn.esprit.devops_project.services.Iservices.IOperatorService;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
-class OperatorServiceImplTest {
-    private OperatorRepository operateurRepository =  Mockito.mock(OperatorRepository.class);;
+public class OperatorServiceImplTest {
 
-    @InjectMocks
-    private OperatorServiceImpl operateurService ;
     @Autowired
-    private OperatorRepository junitOperRepo;
+    private OperatorRepository operatorRepository;
+
     @Autowired
-    private IOperatorService junitOperService;
-
-    List<Operator> operateurslist = new ArrayList() {
-        {
-            add(
-                    Operator.builder()
-                            .idOperateur(555L)
-                            .fname("khouloud")
-                            .lname("ben mbarek")
-                            .password("hello")
-
-                            .build()
-
-            );
-        }};
+    private OperatorServiceImpl operatorService;
 
     @Test
-    void retrieveAllOperateurs() {
+    public void testAddOperator() {
+        // Créer un nouvel opérateur
+        Operator operator = new Operator();
+        operator.setFname("amin");
+        operator.setLname("abidi");
+        operator.setPassword("12345");
 
-        Mockito.when(operateurRepository.findAll()).thenReturn(operateurslist);
-        List<Operator> operateurslist = operateurService.retrieveAllOperators();
-        assertFalse(operateurslist.isEmpty());
-        verify(operateurRepository).findAll();
+        // Ajouter l'opérateur
+        Operator savedOperator = operatorService.addOperator(operator);
 
+        // Vérifier que l'opérateur ajouté a un ID non nul
+        assertNotNull(savedOperator.getIdOperateur());
+
+        // Vérifier que l'opérateur ajouté a les mêmes informations que l'opérateur d'origine
+        assertEquals("amin", (savedOperator).getFname());
+        assertEquals("abidi", savedOperator.getLname());
+        assertEquals("12345", savedOperator.getPassword());
     }
+
 
     @Test
-    void addOperateur() {
-        Operator newOperateur = Operator.builder()
-                .fname("khouloud")
-                .lname("ben mbarek")
-                .password("hello")
-                .build();
-        Operator responseOperateur = this.junitOperService.addOperator(newOperateur);
-       // assertNotNull(responseOperateur);
-        assertEquals(newOperateur.getFname()
-                ,responseOperateur.getFname());
-        this.junitOperService.deleteOperator(responseOperateur.getIdOperateur());
+    public void testRetrieveOperator() {
+        // Créer un nouvel opérateur
+        Operator operator = new Operator();
+        operator.setFname("Alice");
+        operator.setLname("Smith");
+        operator.setPassword("securepassword");
 
+        // Ajouter l'opérateur à la base de données
+        Operator savedOperator = operatorRepository.save(operator);
+
+        // Récupérer l'opérateur par son ID
+        Long operatorId = savedOperator.getIdOperateur();
+        Operator retrievedOperator = operatorService.retrieveOperator(operatorId);
+
+        // Vérifier que l'opérateur récupéré n'est pas nul
+        assertNotNull(retrievedOperator);
+
+        // Vérifier que l'opérateur récupéré a les mêmes informations que l'opérateur ajouté
+        assertEquals("Alice", retrievedOperator.getFname());
+        assertEquals("Smith", retrievedOperator.getLname());
+        assertEquals("securepassword", retrievedOperator.getPassword());
     }
-
 
 }
-
