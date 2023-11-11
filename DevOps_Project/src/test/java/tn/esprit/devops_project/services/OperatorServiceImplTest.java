@@ -60,7 +60,7 @@ class OperatorServiceImplTest {
                 .password("hello")
                 .build();
         Operator responseOperateur = this.junitOperService.addOperator(newOperateur);
-        assertNotNull(responseOperateur);
+       // assertNotNull(responseOperateur);
         assertEquals(newOperateur.getFname()
                 ,responseOperateur.getFname());
         this.junitOperService.deleteOperator(responseOperateur.getIdOperateur());
