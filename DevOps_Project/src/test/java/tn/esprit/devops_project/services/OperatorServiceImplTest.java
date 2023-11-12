@@ -1,64 +1,91 @@
-/*package tn.esprit.devops_project.services;
+package tn.esprit.devops_project.services;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import tn.esprit.devops_project.entities.Operator;
 import tn.esprit.devops_project.repositories.OperatorRepository;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 public class OperatorServiceImplTest {
 
-    @Autowired
+
+
+    @Mock
     private OperatorRepository operatorRepository;
 
-    @Autowired
+    @InjectMocks
     private OperatorServiceImpl operatorService;
 
     @Test
     public void testAddOperator() {
-        // Créer un nouvel opérateur
-        Operator operator = new Operator();
-        operator.setFname("amin");
-        operator.setLname("abidi");
-        operator.setPassword("12345");
+        Operator operator = Operator.builder()
+                .fname("hamza")
+                .lname("abidi")
+                .password("12345")
+                .build();
 
-        // Ajouter l'opérateur
+        when(operatorRepository.save(Mockito.any(Operator.class))).thenAnswer(invocation -> {
+            Operator savedOperator = invocation.getArgument(0);
+            savedOperator.setIdOperateur(generateNonNullOrUniqueID());
+            return savedOperator;
+        });
+
         Operator savedOperator = operatorService.addOperator(operator);
 
-        // Vérifier que l'opérateur ajouté a un ID non nul
-        assertNotNull(savedOperator.getIdOperateur());
+        verify(operatorRepository, times(1)).save(Mockito.any(Operator.class));
 
-        // Vérifier que l'opérateur ajouté a les mêmes informations que l'opérateur d'origine
-        assertEquals("amin", (savedOperator).getFname());
+        assertNotNull(savedOperator.getIdOperateur());
+        assertEquals("hamza", savedOperator.getFname());
         assertEquals("abidi", savedOperator.getLname());
         assertEquals("12345", savedOperator.getPassword());
     }
 
+    private Long generateNonNullOrUniqueID() {
+        // Replace this with your logic to generate a non-null and unique ID.
+        // For simplicity, using the current system time in milliseconds.
+        return System.currentTimeMillis();
+    }
 
     @Test
     public void testRetrieveOperator() {
-        // Créer un nouvel opérateur
+        // Create a new operator
         Operator operator = new Operator();
-        operator.setFname("Alice");
+        operator.setFname("rania");
         operator.setLname("Smith");
-        operator.setPassword("securepassword");
+        operator.setPassword("0000");
 
-        // Ajouter l'opérateur à la base de données
+        // Mock the behavior of the repository
+        when(operatorRepository.save(Mockito.any(Operator.class))).thenReturn(operator);
+
+        // Add the operator to the repository
         Operator savedOperator = operatorRepository.save(operator);
 
-        // Récupérer l'opérateur par son ID
-        Long operatorId = savedOperator.getIdOperateur();
-        Operator retrievedOperator = operatorService.retrieveOperator(operatorId);
+        // Mock the behavior of the repository when retrieving the operator
+        when(operatorRepository.findById(savedOperator.getIdOperateur())).thenReturn(java.util.Optional.ofNullable(savedOperator));
 
-        // Vérifier que l'opérateur récupéré n'est pas nul
+        // Retrieve the operator
+        Operator retrievedOperator = operatorService.retrieveOperator(savedOperator.getIdOperateur());
+
+        // Verify that the repository's findById method was called with the correct argument
+        verify(operatorRepository, times(1)).findById(savedOperator.getIdOperateur());
+
+        // Check assertions as before
         assertNotNull(retrievedOperator);
-
-        // Vérifier que l'opérateur récupéré a les mêmes informations que l'opérateur ajouté
-        assertEquals("Alice", retrievedOperator.getFname());
+        assertEquals("rania", retrievedOperator.getFname());
         assertEquals("Smith", retrievedOperator.getLname());
-        assertEquals("securepassword", retrievedOperator.getPassword());
+        assertEquals("0000", retrievedOperator.getPassword());
     }
 
-}*/
+}
+
