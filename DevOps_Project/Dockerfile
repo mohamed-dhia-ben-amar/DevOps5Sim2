@@ -7,6 +7,8 @@ EXPOSE 8082
 # Utilisation d'une commande RUN pour télécharger l'artefact avec curl
 #RUN curl -o devops-2.1.jar -L http://192.168.164.198:8081/repository/maven-releases/tn/esprit/DevOps_Project/2.1/devops-2.1.jar
 
-COPY target/devops-2.1.jar devops.jar
-# Commande d'exécution de l'application Spring Boot
+WORKDIR /app
+
+# Copy the JAR file from the build context into the container at /app
+COPY target/devops-2.1.jar /app/devops-2.1.jar
 ENTRYPOINT ["java", "-jar", "devops.jar"]
