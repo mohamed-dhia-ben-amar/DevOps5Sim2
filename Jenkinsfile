@@ -35,7 +35,7 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                dir('DevOps_Backend') {
+                dir('DevOps_Project') {
                     script {
                         sh "${MVN_HOME}/bin/mvn clean package"
                     }
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Build Frontend') {
             steps {
-                dir('DevOps_Front') {
+                dir('DevOps_Project_Front') {
                     echo 'Installing dependencies...'
                     sh 'npm install'
                     echo 'Building Angular project...'
