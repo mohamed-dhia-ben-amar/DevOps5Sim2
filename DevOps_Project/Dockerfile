@@ -7,10 +7,11 @@ ARG NEXUS_REPOSITORY=tn/esprit/DevOps_Project
 ARG JAR_VERSION=2.1
 ARG JAR_ARTIFACT=DevOps_Project
 ARG JAR_FILE=${JAR_ARTIFACT}-${JAR_VERSION}.jar
-
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
 # Download the JAR from Nexus
-ADD ${NEXUS_URL}/${NEXUS_REPOSITORY}/${JAR_VERSION}/${JAR_FILE} /${JAR_FILE}
-
+RUN curl -u admin:nexus -o devops-2.1-SNAPSHOT.jar "http://192.168.56.15:8081/repository/maven-releases/tn/esprit/DevOps_Project/2.1/DevOps_Project-2.1.jar" -L
 # Expose the port your Spring Boot application runs on
 EXPOSE 8082
 
