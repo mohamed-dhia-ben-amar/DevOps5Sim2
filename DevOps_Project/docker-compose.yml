@@ -5,7 +5,7 @@ services:
     image: mysql:latest
     restart: unless-stopped
     ports:
-      - 3306:3306  # Corrected port mapping
+      - 3307:3306  # Corrected port mapping
     volumes:
       - db:/var/lib/mysql
 
