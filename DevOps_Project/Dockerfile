@@ -5,7 +5,7 @@ FROM openjdk:11
 EXPOSE 8082
 
 # Utilisation d'une commande RUN pour télécharger l'artefact avec curl
-RUN curl -o DevOps_Project-2.1.jar -L http://192.168.24.198:8081/repository/maven-releases/tn/esprit/DevOps_Project/2.1/DevOps_Project-2.1.jar
+RUN curl -o DevOps_Project-2.1.jar -L http://192.168.164.198:8081/repository/maven-releases/tn/esprit/DevOps_Project/2.1/DevOps_Project-2.1.jar
 
 
 # Commande d'exécution de l'application Spring Boot
