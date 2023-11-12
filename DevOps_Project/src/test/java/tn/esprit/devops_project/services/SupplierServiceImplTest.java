@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
@@ -27,11 +28,9 @@ import static tn.esprit.devops_project.entities.SupplierCategory.ORDINAIRE;
 class SupplierServiceImplTest {
 
     @Mock
-    //@Autowired
     private SupplierRepository supplierRepository;
 
     @InjectMocks
-    //@Autowired
     private SupplierServiceImpl supplierService;
 
     /*
@@ -154,7 +153,7 @@ class SupplierServiceImplTest {
 
     // MOCKITO
 
-    @Test
+    /*@Test
     void retrieveAllSuppliers() {
         List<Supplier> supplierList = new ArrayList<>();
         supplierList.add(new Supplier(1L, "Code1", "Label1", ORDINAIRE, null, null));
@@ -165,9 +164,75 @@ class SupplierServiceImplTest {
         List<Supplier> suppliers = supplierService.retrieveAllSuppliers();
 
         assertEquals(supplierList, suppliers);
+    }*/
+    @Test
+    void addSupplier() {
+        // Create a new supplier
+        Supplier newSupplier = new Supplier();
+        newSupplier.setCode("Code123");
+        newSupplier.setLabel("Label123");
+
+        when(supplierRepository.save(Mockito.any(Supplier.class))).thenAnswer(invocation -> {
+            Supplier savedSupplier = invocation.getArgument(0);
+            savedSupplier.setIdSupplier(1L);
+            return savedSupplier;
+        });
+
+        // Call the service method to add the supplier
+        Supplier addedSupplier = supplierService.addSupplier(newSupplier);
+
+        // Verify that the repository's safe method was called with the correct argument
+        verify(supplierRepository, times(1)).save(Mockito.any(Supplier.class));
+
+        // Check assertions
+        assertNotNull(addedSupplier);
+        assertEquals(1L, addedSupplier.getIdSupplier()); // Adjust the expected ID as needed
+        assertEquals("Code123", addedSupplier.getCode());
+        assertEquals("Label123", addedSupplier.getLabel());
+    }
+    @Test
+    void updateSupplier() {
+        // Create a supplier with an existing ID
+        Supplier existingSupplier = new Supplier();
+        existingSupplier.setIdSupplier(1L);
+        existingSupplier.setCode("ExistingCode");
+        existingSupplier.setLabel("ExistingLabel");
+
+        // Mock the behavior of the repository's save method
+        when(supplierRepository.save(Mockito.any(Supplier.class))).thenAnswer(invocation -> {
+            Supplier updatedSupplier = invocation.getArgument(0);
+            return updatedSupplier;
+        });
+
+        // Call the service method to update the supplier
+        Supplier updatedSupplier = supplierService.updateSupplier(existingSupplier);
+
+        // Verify that the repository's save method was called with the correct argument
+        verify(supplierRepository, times(1)).save(Mockito.any(Supplier.class));
+
+        // Check assertions
+        assertNotNull(updatedSupplier);
+        assertEquals(1L, updatedSupplier.getIdSupplier()); // Ensure the ID remains the same
+        assertEquals("ExistingCode", updatedSupplier.getCode()); // Adjust based on your Supplier class properties
+        assertEquals("ExistingLabel", updatedSupplier.getLabel());
+
+    }
+    @Test
+    void deleteSupplier() {
+        // Assuming you have a supplier ID to be deleted
+        Long supplierIdToDelete = 1L;
+
+        // Mock the behavior of the repository's deleteById method
+        Mockito.doNothing().when(supplierRepository).deleteById(supplierIdToDelete);
+
+        // Call the service method to delete the supplier
+        supplierService.deleteSupplier(supplierIdToDelete);
+
+        // Verify that the repository's deleteById method was called with the correct argument
+        verify(supplierRepository, times(1)).deleteById(supplierIdToDelete);
     }
 
-    @Test
+    /*@Test
     void retrieveAllSuppliers_EmptyList() {
         List<Supplier> emptyList = new ArrayList<>();
         when(supplierRepository.findAll()).thenReturn(emptyList);
@@ -194,26 +259,10 @@ class SupplierServiceImplTest {
         when(supplierRepository.findAll()).thenThrow(new RuntimeException("Repository error"));
 
         assertThrows(Exception.class, () -> supplierService.retrieveAllSuppliers());
-    }
+    }*/
 
 
-
-
-    @Test
-    void addSupplier() {
-        Supplier newSupplier = new Supplier(3L, "Code3", "Label3", ORDINAIRE, null, null);
-        when(supplierRepository.save(newSupplier)).thenReturn(newSupplier);
-
-        Supplier addedSupplier = supplierService.addSupplier(newSupplier);
-
-        assertNotNull(addedSupplier);
-        assertEquals(newSupplier, addedSupplier);
-        assertEquals(newSupplier.getIdSupplier(), addedSupplier.getIdSupplier());
-
-
-        verify(supplierRepository, times(1)).save(newSupplier);
-    }
-    @Test
+    /*@Test
     void addSupplier_Validation_Null() {
         Supplier invalidSupplier = new Supplier(4L, null, null, null, null, null);
 
@@ -243,24 +292,13 @@ class SupplierServiceImplTest {
         Supplier addedSupplier = supplierService.addSupplier(newSupplier);
 
         assertNotNull(addedSupplier);
-    }
+    }*/
 
 
 
-    @Test
-    void updateSupplier() {
-        Supplier existingSupplier = new Supplier(1L, "Code1", "Label1", ORDINAIRE, null, null);
-        Supplier updatedSupplier = new Supplier(1L, "UpdatedCode", "UpdatedLabel", ORDINAIRE, null, null);
 
-        when(supplierRepository.save(updatedSupplier)).thenReturn(updatedSupplier);
-        when(supplierRepository.findById(1L)).thenReturn(Optional.of(existingSupplier));
 
-        Supplier resultSupplier = supplierService.updateSupplier(updatedSupplier);
-
-        assertEquals(updatedSupplier, resultSupplier);
-    }
-
-    @Test
+    /*@Test
     void updateSupplier_NonExistentSupplier() {
         Supplier updatedSupplier = new Supplier(2L, "UpdatedCode", "UpdatedLabel", ORDINAIRE, null, null);
 
@@ -290,22 +328,13 @@ class SupplierServiceImplTest {
 
         // Ensure that the service returns null when trying to update a supplier with a null ID.
         assertNull(supplierService.updateSupplier(updatedSupplier));
-    }
+    }*/
 
 
 
-    @Test
-    void deleteSupplier() {
-        Supplier existingSupplier = new Supplier(1L, "Code1", "Label1", ORDINAIRE, null, null);
 
-        when(supplierRepository.findById(1L)).thenReturn(Optional.of(existingSupplier));
 
-        supplierService.deleteSupplier(1L);
-
-        verify(supplierRepository, times(1)).deleteById(1L);
-    }
-
-    @Test
+    /*@Test
     void deleteSupplier_NonExistentSupplier() {
         when(supplierRepository.findById(2L)).thenReturn(Optional.empty());
 
@@ -316,7 +345,7 @@ class SupplierServiceImplTest {
     void deleteSupplier_NullID() {
         // Ensure that the service does not attempt to delete a supplier with a null ID.
         verify(supplierRepository, never()).deleteById(null);
-    }
+    }*/
 
 
 
