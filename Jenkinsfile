@@ -25,7 +25,7 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                dir('DevOps_Backend') {
+                dir('DevOps_Project') {
                     script {
                         sh "${MVN_HOME}/bin/mvn clean test"
                     }
