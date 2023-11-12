@@ -1,11 +1,13 @@
 package tn.esprit.devops_project.services;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.devops_project.entities.Supplier;
 import tn.esprit.devops_project.entities.SupplierCategory;
@@ -20,15 +22,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static tn.esprit.devops_project.entities.SupplierCategory.ORDINAIRE;
 
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class SupplierServiceImplTest {
 
-    //@Mock
-    @Autowired
+    @Mock
+    //@Autowired
     private SupplierRepository supplierRepository;
 
-    //@InjectMocks
-    @Autowired
+    @InjectMocks
+    //@Autowired
     private SupplierServiceImpl supplierService;
 
     /*
