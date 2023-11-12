@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Git Checkout') {
             steps {
-                // Checkout source code from the repository
-                git 'https://github.com/mohamed-dhia-ben-amar/DevOps5Sim2.git'
+                script {
+                    git branch: 'hamzabenayed-5SIM2', url: 'https://github.com/mohamed-dhia-ben-amar/DevOps5Sim2.git'
+                }
             }
-        }
-    }
 }
 
