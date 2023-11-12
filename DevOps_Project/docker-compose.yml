@@ -16,7 +16,7 @@ services:
 
   springboot-app:
 
-    image: dhiaeddine/5sim2-dhia-devoptproject:latest
+    image: dhiabouslimi/devops_project-2.1:latest
     container_name: springboot-app
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://192.168.164.198:3306/devops?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
