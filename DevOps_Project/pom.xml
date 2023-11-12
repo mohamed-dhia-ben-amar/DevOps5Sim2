@@ -11,7 +11,7 @@
     <groupId>tn.esprit</groupId>
     <artifactId>devops</artifactId>
     <version>2.1</version>
-    <name>DevOps_Project</name>
+    <name>devops</name>
     <description>DevOps_Project</description>
     <properties>
         <java.version>11</java.version>
