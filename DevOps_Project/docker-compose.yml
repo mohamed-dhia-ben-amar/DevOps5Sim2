@@ -1,24 +1,34 @@
-version: "3.8"
+version: "3"
 
 services:
-  mysqldb:
-    image: mysql:latest
-    restart: unless-stopped
-    ports:
-      - 3308:3306  # Corrected port mapping
-    volumes:
-      - db:/var/lib/mysql
 
-  timesheet-backend:
-    depends_on:
-      - mysqldb
-    build: ./
+  mysql-db:
+    image: mysql:8.0.31
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'devops'
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+
+
+  springboot-app:
+
+    image: dhiaeddine/5sim2-dhia-devoptproject:latest
+    container_name: springboot-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.164.198:3306/devops?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      MYSQL_HOST: mysql-db
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: devops
     restart: on-failure
     ports:
-      - 8082:6868
-    volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-
-volumes:
-  db:
+      - 8089:8089
+    links:
+      - mysql-db
