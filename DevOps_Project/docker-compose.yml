@@ -9,8 +9,8 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: 'devops'
     ports:
-      - target: 3306
-        published: 3306
+      - target: 3309
+        published: 3309
         protocol: tcp
 
 
