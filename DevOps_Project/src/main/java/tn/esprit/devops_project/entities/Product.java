@@ -17,7 +17,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idProduct;
-    String title;
+    float title;
     float price;
     int quantity;
     @Enumerated(EnumType.STRING)
