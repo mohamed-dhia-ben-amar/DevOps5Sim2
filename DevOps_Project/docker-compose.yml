@@ -5,9 +5,10 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     ports:
-      - 3307:3306
+      - 3306:3306  # Corrected port mapping
     volumes:
       - db:/var/lib/mysql
+
   timesheet-backend:
     depends_on:
       - mysqldb
@@ -20,4 +21,4 @@ services:
     stdin_open: true
 
 volumes:
-  db :
+  db:
