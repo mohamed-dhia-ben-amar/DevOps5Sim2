@@ -31,6 +31,7 @@ class SupplierServiceImplTest {
     @Autowired
     private SupplierServiceImpl supplierService;
 
+    /*
     @Test
     public void testRetrieveAllSuppliers() {
         Supplier supplier1 = new Supplier(1L, "Code1", "Label1", ORDINAIRE, null, null);
@@ -146,8 +147,10 @@ class SupplierServiceImplTest {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> supplierService.deleteSupplier(null));
         assertTrue(supplierRepository.existsById(supplierId));
-    }
-    /*
+    }*/
+
+    // MOCKITO
+
     @Test
     void retrieveAllSuppliers() {
         List<Supplier> supplierList = new ArrayList<>();
@@ -315,7 +318,7 @@ class SupplierServiceImplTest {
 
 
 
-    @Test
+    /*@Test
     void retrieveSupplier() {
         Supplier existingSupplier = new Supplier(1L, "Code1", "Label1", ORDINAIRE, null, null);
 
@@ -324,13 +327,13 @@ class SupplierServiceImplTest {
         Supplier resultSupplier = supplierService.retrieveSupplier(1L);
 
         assertEquals(existingSupplier, resultSupplier);
-    }
+    }*/
 
-    @Test
+    /*@Test
     void retrieveSupplierById_NonExistentSupplier() {
         when(supplierRepository.findById(2L)).thenReturn(Optional.empty());
 
         assertNull(supplierService.retrieveSupplier(2L));
-    }
-*/
+    }*/
+
 }
