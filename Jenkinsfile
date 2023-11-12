@@ -47,7 +47,6 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('DevOps_Project_Front') {
-                                        env.PATH = "${NODEJS_HOME}/bin:${env.PATH}"
                     echo 'Installing dependencies...'
                     sh 'npm install'
                     echo 'Building Angular project...'
