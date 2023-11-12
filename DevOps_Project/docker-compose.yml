@@ -1,34 +1,32 @@
-version: "3"
-
-services:
-
-  mysql-db:
-    image: mysql:latest
-    container_name: mysql-db
-    environment:
-      MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'devops'
-    ports:
-      - target: 3306
-        published: 3306
-        protocol: tcp
 
 
-  springboot-app:
 
-    image: dhiabouslimi/devops_project-2.1:latest
-    container_name: springboot-app
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.164.198:3306/devops?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      MYSQL_HOST: mysql-db
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: devops
-    restart: on-failure
-    ports:
-      - 8089:8089
-    links:
-      - mysql-db
+        version: "3"
+
+        services:
+          mysql-db:
+            image: mysql:latest
+            container_name: mysql-db
+            environment:
+              MYSQL_ROOT_PASSWORD: 'root'
+              MYSQL_DATABASE: 'devops'
+            ports:
+              - "3309:3306"
+
+          springboot-app:
+            image: dhiabouslimi/devops_project-2.1:latest
+            container_name: springboot-app
+            environment:
+              SPRING_DATASOURCE_URL: jdbc:mysql://192.168.164.198:3309/devops?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+              SPRING_DATASOURCE_USERNAME: root
+              SPRING_DATASOURCE_PASSWORD: root
+              MYSQL_HOST: mysql-db
+              MYSQL_USER: root
+              MYSQL_ROOT_PASSWORD: root
+              MYSQL_PASSWORD: root
+              MYSQL_DATABASE: devops
+            restart: on-failure
+            ports:
+              - "8089:8089"
+            links:
+              - mysql-db
