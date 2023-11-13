@@ -67,30 +67,30 @@ pipeline {
 
 
 
-        stage('Build Docker Images') {
-    steps {
-        script {
-            // Build and push backend image
-            dir('DevOps_Project') {
-                docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
-            }
+//         stage('Build Docker Images') {
+//     steps {
+//         script {
+//             // Build and push backend image
+//             dir('DevOps_Project') {
+//                 docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
+//             }
 
             
-        }
-    }
-}
-       stage('Push image to Hub') {
-    steps {
-        script {
-            withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
-                dir('DevOps_Project') {
-                    sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
-                    sh "docker push hamzuss2000/hamzadevopsproject"
-                }
-            }
-        }
-    }
-}
+//         }
+//     }
+// // }
+//        stage('Push image to Hub') {
+//     steps {
+//         script {
+//             withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
+//                 dir('DevOps_Project') {
+//                     sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
+//                     sh "docker push hamzuss2000/hamzadevopsproject"
+//                 }
+//             }
+//         }
+//     }
+// }
 
         // stage('Deploy to Nexus') {
         //     steps {
