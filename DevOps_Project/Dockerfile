@@ -16,4 +16,4 @@ RUN curl -u admin:nexus -o devops-2.1-SNAPSHOT.jar "http://192.168.56.15:8081/re
 EXPOSE 8082
 
 # Define the entry point for your application
-ENTRYPOINT ["java", "-jar", "/${JAR_FILE}"]
+ENTRYPOINT ["java", "-jar", "//devops-2.1-SNAPSHOT.jar"]
