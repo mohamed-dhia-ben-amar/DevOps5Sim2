@@ -24,6 +24,7 @@ class StockServiceImplTest {
     @Mock
     private StockRepository stockRepository;
 
+    //using builder
     Stock s = Stock.builder().title("test Stock").build();
     List<Stock> list= new ArrayList<Stock>() {
         {
