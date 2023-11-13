@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         MVN_HOME = tool 'M2_HOME' // Make sure 'Maven' is the name of the tool configured in Jenkins
-        NODEJS_HOME = tool 'NodeJS' // Make sure 'NodeJS' is the name of the tool configured in Jenkins
+        NODEJS_HOME = tool 'NODEJS_HOME' // Make sure 'NodeJS' is the name of the tool configured in Jenkins
         NEXUS_USER = 'admin'
         NEXUS_PASSWORD = 'admin'
         SNAP_REPO = 'Mondher_Nexus_Repo-snapshot'
