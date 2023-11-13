@@ -28,5 +28,12 @@ services:
     stdin_open: true
     tty: true
 
+  java-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+
 volumes:
   db:
