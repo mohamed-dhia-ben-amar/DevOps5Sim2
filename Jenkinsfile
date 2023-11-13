@@ -44,24 +44,7 @@ pipeline {
             }
         }
 
-        stage('Build Frontend') {
-            steps {
-                dir('DevOps_Project_Front') {
-                    echo 'Installing dependencies...'
-                    sh 'npm install'
-                    echo 'Building Angular project...'
-                    sh 'ng build'
-                }
-            }
-            post {
-                success {
-                    echo 'Frontend build successful.'
-                }
-                failure {
-                    echo 'Frontend build failed.'
-                }
-            }
-        }
+        
 
 
            stage('SonarQube Analysis') {
