@@ -74,8 +74,8 @@ pipeline {
             withSonarQubeEnv('SonarQube') {
                 sh """
                     ${scannerHome}/bin/sonar-scanner \
-                    -Dsonar.projectKey=Mondher_Devops \
-                    -Dsonar.java.binaries=DevOps_Backend/target/classes
+                    -Dsonar.projectKey=HamzaProject \
+                    -Dsonar.java.binaries=DevOps_Project/target/classes
                 """
             }
         }
