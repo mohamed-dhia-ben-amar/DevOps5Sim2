@@ -83,7 +83,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>stockmgt-devops-1.0.0</finalName>
+        <finalName>DevOps_Project-2.1</finalName>
     </build>
     <!-- Deploy to Nexus -->
     <distributionManagement>
