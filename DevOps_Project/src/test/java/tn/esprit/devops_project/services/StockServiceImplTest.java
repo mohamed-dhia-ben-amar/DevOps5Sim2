@@ -6,6 +6,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.devops_project.entities.Stock;
 import tn.esprit.devops_project.repositories.StockRepository;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,15 @@ class StockServiceImplTest {
 
     @Mock
     private StockRepository stockRepository;
+
+    Stock s = Stock.builder().title("test Stock").build();
+    List<Stock> list= new ArrayList<Stock>() {
+        {
+            add(Stock.builder().title("test Stock 1").build());
+            add(Stock.builder().title("test Stock 2").build());
+        }
+    };
+
 
     @Test
     void testAddStock() {
