@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: 'root'
     ports:
-      - 3309:3306
+      - 3306:3306
 
 
   springboot-app:
@@ -27,6 +27,6 @@ services:
       MYSQL_DATABASE: devops
     restart: on-failure
     ports:
-      - 8089:8089
+      - 8082:8082
     links:
       - mysql-db
