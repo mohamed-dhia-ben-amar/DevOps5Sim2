@@ -71,7 +71,7 @@ pipeline {
     steps {
         script {
             // Build and push backend image
-            dir('DevOps_Backend') {
+            dir('DevOps_Project') {
                 docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
             }
 
