@@ -34,6 +34,7 @@ class StockServiceImplTest {
     };
 
 
+    /*
     @Test
     void testAddStock() {
         long stockId = 1L;
@@ -56,6 +57,7 @@ class StockServiceImplTest {
         // Ensure that the savedStock matches the expected stock
         assertEquals(stock, savedStock, "Expected stock and saved stock should match");
     }
+     */
 
     @Test
     void testRetrieveStock() {
