@@ -10,7 +10,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  gestion-station-ski:
+  gestion-stock:
     depends_on:
       - mysqldb
     image: 14326410/stockmgt-devops:1.0.0
