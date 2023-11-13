@@ -63,6 +63,52 @@ pipeline {
             }
         }
 
+
+           stage('SonarQube Analysis') {
+    steps {
+        script {
+            // Checkout the source code from GitHub
+            checkout scm
+            
+            def scannerHome = tool 'SonarQubeScanner'
+            withSonarQubeEnv('SonarQube') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=Mondher_Devops \
+                    -Dsonar.java.binaries=DevOps_Backend/target/classes
+                """
+            }
+        }
+    }
+}
+
+
+
+        stage('Build Docker Images') {
+    steps {
+        script {
+            // Build and push backend image
+            dir('DevOps_Backend') {
+                docker.build("mondherbha1999/devopsproject", "-f /var/lib/jenkins/workspace/projetDevOps/DevOps_Backend/Dockerfile .")
+            }
+
+            
+        }
+    }
+}
+       stage('Push image to Hub') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
+                dir('DevOps_Backend') {
+                    sh "docker login -u mondherbha1999 -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker push mondherbha1999/devopsproject"
+                }
+            }
+        }
+    }
+}
+
         stage('Deploy to Nexus') {
             steps {
                 script {
