@@ -92,6 +92,14 @@ pipeline {
 //     }
 // }
 
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    sh '/usr/bin/docker-compose -f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/docker-compose.yml up -d'
+                }
+            }
+}
+
         // stage('Deploy to Nexus') {
         //     steps {
         //         script {
