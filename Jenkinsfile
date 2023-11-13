@@ -83,9 +83,9 @@ pipeline {
     steps {
         script {
             withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
-                dir('DevOps_Backend') {
-                    sh "docker login -u mondherbha1999 -p ${DOCKER_HUB_PASSWORD}"
-                    sh "docker push mondherbha1999/devopsproject"
+                dir('DevOps_Project') {
+                    sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker push hamzuss2000/Hamzadevopsproject"
                 }
             }
         }
