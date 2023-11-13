@@ -72,7 +72,7 @@ pipeline {
         script {
             // Build and push backend image
             dir('DevOps_Backend') {
-                docker.build("hamzuss2000/Hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
+                docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
             }
 
             
@@ -85,7 +85,7 @@ pipeline {
             withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
                 dir('DevOps_Project') {
                     sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
-                    sh "docker push hamzuss2000/Hamzadevopsproject"
+                    sh "docker push hamzuss2000/hamzadevopsproject"
                 }
             }
         }
