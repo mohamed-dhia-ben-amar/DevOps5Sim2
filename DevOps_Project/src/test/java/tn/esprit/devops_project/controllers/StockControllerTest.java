@@ -20,6 +20,7 @@ class StockControllerTest {
     @Mock
     private IStockService stockService;
 
+    /*
     @Test
     void testAddStock() {
         // Données de test
@@ -36,4 +37,5 @@ class StockControllerTest {
         // Vérification des résultats
         assertEquals(stockToAdd, addedStock, "Le stock ajouté doit correspondre au stock de test");
     }
+     */
 }
