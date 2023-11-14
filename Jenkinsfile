@@ -4,7 +4,6 @@ pipeline {
     environment {
         MVN_HOME = tool 'M2_HOME' // Make sure 'Maven' is the name of the tool configured in Jenkins
         NODEJS_HOME = tool 'NODEJS_HOME' // Make sure 'NodeJS' is the name of the tool configured in Jenkins
-        SCANNERHOME = tool 'SonarQubeScanner'
         NEXUS_USER = 'admin'
         NEXUS_PASSWORD = '0000'
         SNAP_REPO = 'devopsproject-snapshot'
@@ -46,16 +45,19 @@ pipeline {
 
         
 
- stage('SonarQube') {
+    stage('SonarQube Analysis') {
     steps {
         script {
-            try {
-                dir('DevOps_Project') {
-                    sh './mvnw sonar:sonar -Dsonar.login=admin -Dsonar.password=0000'
-                }
-            } catch (Exception e) {
-                currentBuild.result = 'FAILURE'
-                error "Error running SonarQube analysis: ${e.message}"
+            // Checkout the source code from GitHub
+            checkout scm
+            
+            def scannerHome = tool 'SonarQubeScanner'
+            withSonarQubeEnv('SonarQube2') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=HamzaProject \
+                    -Dsonar.java.binaries=DevOps_Project/target/classes
+                """
             }
         }
     }
