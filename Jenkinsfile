@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=0000r'
+                        sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=0000'
                     } catch (Exception e) {
                         currentBuild.result = 'FAILURE'
                         error "Error running SonarQube analysis: ${e.message}"
