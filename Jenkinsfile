@@ -57,7 +57,9 @@ pipeline {
                 sh """
                     ${SCANNERHOME}/bin/sonar-scanner -X \
                     -Dsonar.projectKey=HamzaProject \
-                    -Dsonar.java.binaries=DevOps_Project/target/classes
+                    -Dsonar.java.binaries=DevOps_Project/target/classes \
+                    -Dsonar.login=admin \
+                     -Dsonar.password=0000
                 """
             }
         }
