@@ -17,10 +17,10 @@ services:
     restart: on-failure
     environment:
       SPRING_APPLICATION_JSON: '{
-        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db_stock?createDatabaseIfNotExist=true",
+        "spring.datasource.url": "jdbc:mysql://mysqldb:3306/db_stock?createDatabaseIfNotExist=true"
         "spring.datasource.username": "root",
-        "spring.datasource.password": "",
-        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect",
+        "spring.datasource.password":
+        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect"
         "spring.jpa.hibernate.ddl-auto": "update"
       }'
     ports:
@@ -28,12 +28,6 @@ services:
     stdin_open: true
     tty: true
 
-  java-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8082:8082"
 
 volumes:
   db:
