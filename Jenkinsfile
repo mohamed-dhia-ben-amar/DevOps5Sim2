@@ -46,23 +46,23 @@ pipeline {
         
 
 
-           stage('SonarQube Analysis') {
-    steps {
-        script {
-            // Checkout the source code from GitHub
-            checkout scm
+//            stage('SonarQube Analysis') {
+//     steps {
+//         script {
+//             // Checkout the source code from GitHub
+//             checkout scm
             
-            def scannerHome = tool 'SonarQubeScanner'
-            withSonarQubeEnv('SonarQube') {
-                sh """
-                    ${scannerHome}/bin/sonar-scanner -X \
-                    -Dsonar.projectKey=HamzaProject \
-                    -Dsonar.java.binaries=DevOps_Project/target/classes
-                """
-            }
-        }
-    }
-}
+//             def scannerHome = tool 'SonarQubeScanner'
+//             withSonarQubeEnv('SonarQube') {
+//                 sh """
+//                     ${scannerHome}/bin/sonar-scanner -X \
+//                     -Dsonar.projectKey=HamzaProject \
+//                     -Dsonar.java.binaries=DevOps_Project/target/classes
+//                 """
+//             }
+//         }
+//     }
+// }
 
 
 
