@@ -16,6 +16,13 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+         <distributionManagement>
+        <repository>
+            <id>deploymentRepo</id>
+            <name>hamzabenayed-5SIM2</name>
+            <url>http://localhost:8081/repository/hamzabenayed-5SIM2/</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
