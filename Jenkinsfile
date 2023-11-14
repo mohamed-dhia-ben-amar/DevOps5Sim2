@@ -4,7 +4,8 @@ pipeline {
     environment {
         MVN_HOME = tool 'M2_HOME' // Make sure 'Maven' is the name of the tool configured in Jenkins
         NODEJS_HOME = tool 'NODEJS_HOME' // Make sure 'NodeJS' is the name of the tool configured in Jenkins
-        scannerHome = tool 'SonarQubeScanner'
+        SCANNERHOME = tool 'SonarQubeScanner'
+        SONARQUBE2 = tool 'SonarQube2'
         NEXUS_USER = 'admin'
         NEXUS_PASSWORD = '0000'
         SNAP_REPO = 'devopsproject-snapshot'
@@ -53,9 +54,9 @@ pipeline {
             // Checkout the source code from GitHub
             checkout scm
             
-            withSonarQubeEnv('SonarQube2') {
+            withSonarQubeEnv("${SONARQUBE2}") {
                 sh """
-                    ${scannerHome}/bin/sonar-scanner -X \
+                    ${SCANNERHOME}/bin/sonar-scanner -X \
                     -Dsonar.projectKey=HamzaProject \
                     -Dsonar.java.binaries=DevOps_Project/target/classes
                 """
