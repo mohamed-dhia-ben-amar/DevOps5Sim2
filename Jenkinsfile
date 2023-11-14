@@ -22,15 +22,15 @@ pipeline {
             }
         }
 
-        // stage('Unit Test') {
-        //     steps {
-        //         dir('DevOps_Project') {
-        //             script {
-        //                 sh "${MVN_HOME}/bin/mvn clean test"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Unit Test') {
+            steps {
+                dir('DevOps_Project') {
+                    script {
+                        sh "${MVN_HOME}/bin/mvn clean test"
+                    }
+                }
+            }
+        }
 
         stage('Build Backend') {
             steps {
@@ -44,63 +44,63 @@ pipeline {
         }
 
         
-// stage('SonarQube Analysis') {
-//     steps {
-//         script {
-//             // Checkout the source code from GitHub
-//             checkout scm
+stage('SonarQube Analysis') {
+    steps {
+        script {
+            // Checkout the source code from GitHub
+            checkout scm
 
-//             def scannerHome = tool 'SonarQubeScanner'
+            def scannerHome = tool 'SonarQubeScanner'
 
-//             withSonarQubeEnv('SonarQube2') {
-//                 sh """
-//                     ${scannerHome}/bin/sonar-scanner \
-//                     -Dsonar.projectKey=HamzaProject \
-//                     -Dsonar.java.binaries=DevOps_Project/target/classes \
-//                     -Dsonar.login=squ_30dc4567fb7473e5830f9f70c88a5b7edb079238
-//                 """
-//             }
-//         }
-//     }
-// }
-
-
+            withSonarQubeEnv('SonarQube2') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=HamzaProject \
+                    -Dsonar.java.binaries=DevOps_Project/target/classes \
+                    -Dsonar.login=squ_30dc4567fb7473e5830f9f70c88a5b7edb079238
+                """
+            }
+        }
+    }
+}
 
 
 
 
-//         stage('Build Docker Images') {
-//     steps {
-//         script {
-//             // Build and push backend image
-//             dir('DevOps_Project') {
-//                 docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
-//             }
+
+
+        stage('Build Docker Images') {
+    steps {
+        script {
+            // Build and push backend image
+            dir('DevOps_Project') {
+                docker.build("hamzuss2000/hamzadevopsproject", "-f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/DevOps_Project/Dockerfile .")
+            }
 
             
-//         }
-//     }
-// // }
-//        stage('Push image to Hub') {
-//     steps {
-//         script {
-//             withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
-//                 dir('DevOps_Project') {
-//                     sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
-//                     sh "docker push hamzuss2000/hamzadevopsproject"
-//                 }
-//             }
-//         }
-//     }
-// }
+        }
+    }
+ }
+       stage('Push image to Hub') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'docker-hub-credentials-id', variable: 'DOCKER_HUB_PASSWORD')]) {
+                dir('DevOps_Project') {
+                    sh "docker login -u hamzuss2000 -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker push hamzuss2000/hamzadevopsproject"
+                }
+            }
+        }
+    }
+}
 
-//         stage('Build and Deploy') {
-//             steps {
-//                 script {
-//                     sh '/usr/bin/docker-compose -f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/docker-compose.yml up -d'
-//                 }
-//             }
-// }
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    sh '/usr/bin/docker-compose -f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/docker-compose.yml up -d'
+                }
+            }
+}
 
        stage('Deploy to Nexus') {
             steps {
