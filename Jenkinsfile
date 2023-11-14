@@ -44,24 +44,30 @@ pipeline {
         }
 
         
+stage('SonarQube Analysis') {
+    steps {
+        script {
+            // Checkout the source code from GitHub
+            checkout scm
 
-//     stage('SonarQube Analysis') {
-//     steps {
-//         script {
-//             // Checkout the source code from GitHub
-//             checkout scm
-            
-//             def scannerHome = tool 'SonarQubeScanner'
-//             withSonarQubeEnv('SonarQube2') {
-//                 sh """
-//                     ${scannerHome}/bin/sonar-scanner \
-//                     -Dsonar.projectKey=HamzaProject \
-//                     -Dsonar.java.binaries=DevOps_Project/target/classes
-//                 """
-//             }
-//         }
-//     }
-// }
+            def scannerHome = tool 'SonarQubeScanner'
+
+            withCredentials([string(credentialsId: 'admin', variable: 'SONAR_LOGIN'),
+                             string(credentialsId: '0000', variable: 'SONAR_PASSWORD')]) {
+                withSonarQubeEnv('SonarQube2') {
+                    sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=HamzaProject \
+                        -Dsonar.java.binaries=DevOps_Project/target/classes \
+                        -Dsonar.login=${SONAR_LOGIN} \
+                        -Dsonar.password=${SONAR_PASSWORD}
+                    """
+                }
+            }
+        }
+    }
+}
+
 
 
 
@@ -99,28 +105,28 @@ pipeline {
 //             }
 // }
 
-       stage('Deploy to Nexus') {
-            steps {
-                script {
-                    def artifactFile = "DevOps_Project/target/DevOps_Project-2.1.jar" // Replace with the actual artifact name pattern
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: "${NEXUS_IP}:${NEXUS_PORT}",
-                        groupId: 'QA',
-                        version: "${env.BUILD_ID}-${new Date().format('yyyyMMddHHmmss')}", // Correct timestamp format
-                        repository: "${RELEASE_REPO}",
-                        credentialsId: "${NEXUS_LOGIN}",
-                        artifacts: [
-                            [artifactId: 'DevOps_Project',
-                             classifier: '',
-                             file: artifactFile,
-                             type: 'jar']
-                        ]
-                    )
-                }
-            }
-        }
+       // stage('Deploy to Nexus') {
+       //      steps {
+       //          script {
+       //              def artifactFile = "DevOps_Project/target/DevOps_Project-2.1.jar" // Replace with the actual artifact name pattern
+       //              nexusArtifactUploader(
+       //                  nexusVersion: 'nexus3',
+       //                  protocol: 'http',
+       //                  nexusUrl: "${NEXUS_IP}:${NEXUS_PORT}",
+       //                  groupId: 'QA',
+       //                  version: "${env.BUILD_ID}-${new Date().format('yyyyMMddHHmmss')}", // Correct timestamp format
+       //                  repository: "${RELEASE_REPO}",
+       //                  credentialsId: "${NEXUS_LOGIN}",
+       //                  artifacts: [
+       //                      [artifactId: 'DevOps_Project',
+       //                       classifier: '',
+       //                       file: artifactFile,
+       //                       type: 'jar']
+       //                  ]
+       //              )
+       //          }
+       //      }
+       //  }
         
     }
 
