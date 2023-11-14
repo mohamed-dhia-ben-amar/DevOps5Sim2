@@ -46,25 +46,18 @@ pipeline {
 
         
 
-
-           stage('SonarQube Analysis') {
-    steps {
-        script {
-            // Checkout the source code from GitHub
-            checkout scm
-            
-            withSonarQubeEnv('SonarQube2') {
-                sh """
-                    ${SCANNERHOME}/bin/sonar-scanner -X \
-                    -Dsonar.projectKey=HamzaProject \
-                    -Dsonar.java.binaries=DevOps_Project/target/classes \
-                    -Dsonar.login=admin \
-                     -Dsonar.password=0000
-                """
+ stage('SonarQube') {
+            steps {
+                script {
+                    try {
+                        sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=0000r'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error "Error running SonarQube analysis: ${e.message}"
+                    }
+                }
             }
         }
-    }
-}
 
 
 
