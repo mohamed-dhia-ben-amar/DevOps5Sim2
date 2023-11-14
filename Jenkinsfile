@@ -52,7 +52,7 @@ stage('SonarQube Analysis') {
 
             def scannerHome = tool 'SonarQubeScanner'
 
-            withCredentials([string(credentialsId: 'admin', variable: 'SONAR_LOGIN'),
+            withCredentials([string(credentialsId: 'squ_30dc4567fb7473e5830f9f70c88a5b7edb079238', variable: 'SONAR_LOGIN'),
                              string(credentialsId: '0000', variable: 'SONAR_PASSWORD')]) {
                 withSonarQubeEnv('SonarQube2') {
                     sh """
