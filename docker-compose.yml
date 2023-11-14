@@ -23,6 +23,6 @@ services:
       SPRING_JPA_HIBERNATE_DDL-AUTO: "update"
     depends_on:
       - db
-       
+
 volumes:
- devopsprojecthamza_db_data:  
+  devopsproject_db_data:   
