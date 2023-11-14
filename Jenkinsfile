@@ -6,14 +6,13 @@ pipeline {
         NODEJS_HOME = tool 'NODEJS_HOME' // Make sure 'NodeJS' is the name of the tool configured in Jenkins
         NEXUS_USER = 'admin'
         NEXUS_PASSWORD = 'admin'
-        SNAP_REPO = 'Mondher_Nexus_Repo-snapshot'
-        RELEASE_REPO = 'Mondher_Nexus_Repo-lastreelase'
-        CENTRAL_REPO = 'Mondher_Nexus_Repo-central-repo'
-        NEXUS_GRP_REPO = 'Mondher_Nexus_Repo-grp-repo'
+        SNAP_REPO = 'devopsproject-snapshot'
+        RELEASE_REPO = 'devopsproject-release'
+        CENTRAL_REPO = 'devopsproject-central-repo'
+        NEXUS_GRP_REPO = 'devopsproject-grp-repo'
         NEXUS_IP = 'localhost'
         NEXUS_PORT = '8081'
-        NEXUS_LOGIN = '485b967a-8f70-498c-8c77-b47207262286'
-        // Dynamically assign 'version' or ensure it matches the version in pom.xml
+        NEXUS_LOGIN = 'b556b19d-561b-4293-be6d-53c092fff139'
     }
 
     stages {
@@ -47,23 +46,23 @@ pipeline {
         
 
 
-//            stage('SonarQube Analysis') {
-//     steps {
-//         script {
-//             // Checkout the source code from GitHub
-//             checkout scm
+           stage('SonarQube Analysis') {
+    steps {
+        script {
+            // Checkout the source code from GitHub
+            checkout scm
             
-//             def scannerHome = tool 'SonarQube'
-//             withSonarQubeEnv('SonarQube') {
-//                 sh """
-//                     ${scannerHome}/bin/sonar-scanner \
-//                     -Dsonar.projectKey=HamzaProject \
-//                     -Dsonar.java.binaries=DevOps_Project/target/classes
-//                 """
-//             }
-//         }
-//     }
-// }
+            def scannerHome = tool 'SonarQubeScanner'
+            withSonarQubeEnv('SonarQube') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=HamzaProject \
+                    -Dsonar.java.binaries=DevOps_Project/target/classes
+                """
+            }
+        }
+    }
+}
 
 
 
@@ -92,18 +91,18 @@ pipeline {
 //     }
 // }
 
-        stage('Build and Deploy') {
-            steps {
-                script {
-                    sh '/usr/bin/docker-compose -f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/docker-compose.yml up -d'
-                }
-            }
-}
+//         stage('Build and Deploy') {
+//             steps {
+//                 script {
+//                     sh '/usr/bin/docker-compose -f /var/lib/jenkins/workspace/HamzaBenAyedPipeline/docker-compose.yml up -d'
+//                 }
+//             }
+// }
 
-        // stage('Deploy to Nexus') {
+       // stage('Deploy to Nexus') {
         //     steps {
         //         script {
-        //             def artifactFile = "DevOps_Backend/target/DevOps_Project-1.0.jar" // Replace with the actual artifact name pattern
+        //             def artifactFile = "DevOps_Project/target/DevOps_Project-1.0.jar" // Replace with the actual artifact name pattern
         //             nexusArtifactUploader(
         //                 nexusVersion: 'nexus3',
         //                 protocol: 'http',
@@ -122,6 +121,7 @@ pipeline {
         //         }
         //     }
         // }
+        
     }
 
     post {
