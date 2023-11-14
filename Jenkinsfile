@@ -53,9 +53,9 @@ pipeline {
             checkout scm
             
             def scannerHome = tool 'SonarQubeScanner'
-            withSonarQubeEnv('SonarQube') {
+            withSonarQubeEnv('SonarQube2') {
                 sh """
-                    ${scannerHome}/bin/sonar-scanner -X \
+                    ${scannerHome}/bin/sonar-scanner  \
                     -Dsonar.projectKey=HamzaProject \
                     -Dsonar.java.binaries=DevOps_Project/target/classes
                 """
